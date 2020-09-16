@@ -6,16 +6,6 @@
 
 \usetheme{Ufg}
 
-%-------------------------------------theorems--------------
-\newtheorem{conj}{Conjetura}
-\newtheorem{defi}{Definição}
-\newtheorem{teo}{Teorema}
-\newtheorem{lema}{Lema}
-\newtheorem{prop}{Proposição}
-\newtheorem{cor}{Corolário}
-\newtheorem{ex}{Exemplo}
-\newtheorem{exer}{Exercício}
-
 \setbeamertemplate{theorems}[numbered]
 \setbeamertemplate{caption}[numbered]
 
@@ -23,30 +13,19 @@
 %----------------------- Primary Definitions -----------------%
 
 % This command set the default Color, is also possible to choose a custom color
-\setPrimaryColor{UFGBlue} 
+\setPrimaryColor{DarkGray} 
 
 % First one is logo in title slide (we recommend use a horizontal image), and second one is the logo used in the remaining slides (we recommend use a square image)
-\setLogos{lib/logos/infw.png}{lib/logos/infw2.png} 
+\setLogos{lib/logos/valve_losgdg.pdf}{lib/logos/valve_logo.pdf} 
 
 
 % -------------------------------------- Title Slide Information
 \begin{document}
-\title[Inf UFG]{Apresentações Instituto de informática}
-\subtitle{Template Latex}
+\title[Valve]{A year of ACO}
+\subtitle{from prototype to default}
 
-\author{Altino Dantas\inst{1} \and Deuslirio Junior\inst{2}}
-
-\institute[UFG] % (optional)
-{
-  \inst{1}%
-  Instituto de Informática\\
-  Federal University of Goiás
-  \and
-  \inst{2}%
-  Instituto de Informática\\
-  Federal University of Goiás
-}
-\date{2019}
+\author{Timur Kristóf}
+\date{2020}
 %-----------------------The next statement creates the title page.
 \frame[noframenumbering]{\titlepage}
 
@@ -58,204 +37,804 @@
     \frametitle{Table of Contents}
     \tableofcontents
 \end{frame}
+
+\section{Our ACO story}
+
 %---------------------------------------------------------
+\setLayout{mainpoint}
+{
+\usebackgroundtemplate{
+    \begin{picture}(100,256)(0,0)
+        \put(0,0){
+            \includegraphics[width=\paperwidth]{figs/road.jpg}
+        }
+        % Put the frame title in the middle of page
+        \put(160,115){
+            \begin{tabular}{m{0.7\textwidth}}
+                \begin{flushleft}
+                   \selectfont \Huge \bfseries \insertframetitle
+                \end{flushleft}
+            \end{tabular}
+        }
+        \put(150,80){
+            \begin{tikzpicture}
+                \fill[white] (0,0) rectangle (0.2,3);
+            \end{tikzpicture}
+        }
+        \put(20,20){\pgfuseimage{logo2_medium}}
+    \end{picture}
+}
+\begin{frame}{Our ACO journey}
+\end{frame}
+}
 
-
-%---------------------------------------------------------Slide 2
-\section{Common presentation elements}
-
-\subsection{Box}
-
+%---------------------------------------------------------
 \setLayout{vertical}
-\begin{frame}{Example on using box}
+\begin{frame}{ACO motivation}
 
     \footnotesize
-    
-    \begin{ex}
-        Em uma versão da linguagem BASIC, o nome de uma variável é uma sequência de um ou dois caracteres alfanuméricos, em que letras maiúsculas e minúsculas não são distinguidas. Além disso, um nome de variável deve começar com uma letra e deve ser diferente das cinco sequências de dois caracteres reservadas para o uso de comandos. Quantos nomes diferentes de variáveis são possíveis nesta versão do BASIC?
-    \end{ex}
-    
-    \begin{block}{Solução}
-        Pela regra da soma, $V=V_1+V_2$. Como as variáveis só podem começar com letras, temos que $V_1=26$. Pela regra do produto, há $26\cdot 36=936$ sequências de tamanho $2$ que comecem com uma letra e terminam com um caracter alfanumérico. Porém, não se deve usar $5$ variáveis reservadas. Assim, $V_2=26\cdot 36-5=931$. Logo, há $V=V_1+V_2 = 26+931=957$ nomes diferentes para variáveis nesta versão do BASIC.
+
+    \begin{block}{Fluid gaming}
+        We'd like to give gamers a smooth, stutter-free experience, so we prioritize compilation speed.
+    \end{block}
+
+    \begin{block}{Developed in mesa}
+        Issues can be fixed within mesa releases, independently of the schedule of other projects.
+    \end{block}
+
+    \begin{block}{Runtime performance}
+        Good divergence analysis allows us to better optimize runtime performance.
     \end{block}
 
 \end{frame}
+
 %---------------------------------------------------------
+\setLayout{mainpoint}
+\begin{frame}{}
+    \frametitle{Where we were last XDC}
+\end{frame}
 
+%---------------------------------------------------------
+\setLayout{vertical}
+\begin{frame}{Supported stages @ XDC 2019}
 
-%--------------------------------------------------------- Slide 3
-\subsection{Table}
+    \LARGE
+    Started with PS only. \\
+    Then added CS and VS.
 
-\begin{frame}{Example on using table}
+\end{frame}
 
+%---------------------------------------------------------
+\setLayout{vertical}
+\begin{frame}{Supported hardware @ XDC 2019}
+
+    \LARGE
+    Started on Polaris (GFX8) \\
+    Then Vega was added (GFX9)
+
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{vertical}
+\begin{frame}{ACO 2019-2020 by numbers}
+
+    \LARGE
+    300+ merge requests \\
+    5 current contributors \\
+    15 supported shader stages \\
+    5 supported HW generations (all GCN/RDNA) \\
+    \ \\
+    \normalsize
+    Full feature parity
+    \LARGE
+    \begin{itemize}
+    	\item VK exts supported by RADV work with ACO
+    	\item Full conformance on newer HW
+    \end{itemize}
+
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{vertical}
+\begin{frame}{No benchmarks this time, but...}
+
+    \normalsize
+    Runtime: \\
+    \LARGE
+    Phoronix has awesome benchmarks. \\
+    \ \\
+    \normalsize
+    Compile time: \\
+    \LARGE
+    Consistent with what was shown in XDC2019.
+
+\end{frame}
+
+\section{How ACO works}
+
+%---------------------------------------------------------
+\setLayout{mainpoint}
+\begin{frame}{}
+    \frametitle{Where ACO fits in}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{vertical}
+\begin{frame}{RADV/ACO shader compilation}
+
+    \footnotesize
+
+    \begin{alertblock}{SPIR-V to NIR}
+        Parse the SPIR-V shader into NIR.
+    \end{alertblock}
+
+    \begin{alertblock}{NIR lowering and optimization}
+        Lower the IR to be suitable for consumption by RADV / ACO.
+    \end{alertblock}
+
+    \begin{exampleblock}{ACO shader compilation}
+        Compile the shader into a program the HW can execute.
+    \end{exampleblock}
+
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{mainpoint}
+\begin{frame}{}
+    \frametitle{Recap: how ACO works}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{vertical}
+\begin{frame}{ACO compilation phases 1-3}
+
+    \footnotesize
+
+    \begin{block}{1. Instruction selection}
+        Based around the NIR divergence analysis, emits ACO IR which is SSA.
+    \end{block}
+
+    \begin{block}{2. Value numbering, optimization}
+        Common subexpression elimination, constant propagation, instruction combining.
+    \end{block}
+
+    \begin{block}{3. Setup reductions, insert exec mask}
+        Ensure reductions work. Add instructions that control SIMD lanes.
+    \end{block}
+
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{vertical}
+\begin{frame}{ACO compilation phases 4-6}
+
+    \footnotesize
+
+    \begin{block}{4. Live variable analysis}
+        Calculate register need, used for spilling and scheduling.
+    \end{block}
+
+    \begin{block}{5. Spilling}
+        Lower to CSSA, then try to decrease register usage.
+    \end{block}
+
+    \begin{block}{6. Instruction Scheduling}
+        Move loads as high up as possible.
+    \end{block}
+
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{vertical}
+\begin{frame}{ACO compilation phases 7-9}
+
+    \footnotesize
+
+    \begin{block}{7. Register Allocation}
+        Works on SSA, emits shuffle code.
+    \end{block}
+
+    \begin{block}{8. SSA Elimination}
+        Insert copies to match phi node semantics.
+    \end{block}
+
+    \begin{block}{9. Lower to HW instructions}
+        Replace pseudo instructions with machine instructions.
+    \end{block}
+
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{vertical}
+\begin{frame}{ACO compilation phases 10-11}
+
+    \footnotesize
+
+    \begin{block}{10. Insert wait states and NOPs, resolve hazards}
+        Ensure correct behaviour of memory instructions, eliminate HW hazards.
+    \end{block}
+
+    \begin{block}{11. Assembler}
+        ACO IR is already almost GCN/RDNA ASM, so only need to encode.
+    \end{block}
+
+\end{frame}
+
+\section{Changes to ACO so that it can be the default compiler in RADV}
+
+%---------------------------------------------------------
+\setLayout{mainpoint}
+\begin{frame}{}
+    \frametitle{How we had to change it to make it the default}
+\end{frame}
+
+\subsection{New hardware support}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{New hardware support}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{New (to us) hardware support}
+    \normalsize
     \begin{table}[]
         \centering
-        \caption{\label{tab:1}Countries and their codes}
         
         \renewcommand{\arraystretch}{1.5}
         \setlength{\tabcolsep}{10pt}
         
         {\rowcolors{2}{}{LightGray!10}
-            \begin{tabular}{ p{3cm}p{3cm}p{3cm}  }
+            \begin{tabular}{ p{2cm}p{8cm}p{2.5cm}  }
                 \toprule 
-                \textbf{Country Name} & \textbf{Code 2} & \textbf{Code 3} \\
+                \textbf{Generation} & \textbf{Code names} & \textbf{Year} \\
                 \midrule
-                Afghanistan & AF &AFG \\
-                Aland Islands & AX   & ALA \\
-                Albania &AL & ALB \\
-                Algeria    &DZ & DZA \\
+                GFX6 & Pitcairn, Oldand, etc & 2012 \\
+                GFX7 & Hawaii, Bonaire, etc & 2013 \\
+                GFX10 & Navi & 2019 \\
                 \bottomrule
             \end{tabular}
         }
     \end{table}
-    
 \end{frame}
+
 %---------------------------------------------------------
-
-\subsection{Image}
-
-%--------------------------------------------------------- Slide 4
-\begin{frame}{Example on using image}
-
-    \begin{figure}
-        \centering
-        \includegraphics[width=.9\textwidth]{readme/layouts.png}
-        \caption{Template's Layouts.}
-        \label{fig:layouts}
-    \end{figure}
-    
-\end{frame}
-%---------------------------------------------------------
-
-
-%--------------------------------------------------------- Slide 5
-\section{Changing colors and Layouts}
-
-\setLayout{blank} % Example of changing layout
-\setBGColor{DarkOrange}  %Example of changing background color 
-
-\begin{frame}{Clean layout and two-column text}
-    
-    \begin{columns}
-    
-        \column{0.5\textwidth}
-        This is a text in first column.
-        $$E=mc^2$$
-        $$ 1 + 2 + \cdots + k =  \frac{k \cdot (k + 1)}{2}.$$
-        \begin{itemize}
-        \item First item
-       
-        \item Second item
-        \end{itemize}
-        
-        \column{0.5\textwidth}
-        This text will be in the second column
-        and on a second tought this is a nice looking
-        layout in some cases.
-        
-        \begin{enumerate}
-            \item First
-            \item Second
-        \end{enumerate}
-        
-    \end{columns}
-    
-\end{frame}
-%---------------------------------------------------------
-
-
-%---------------------------------------------------------Slide 6
-%Highlighting text
-\setLayout{vertical}
-\begin{frame}{Sample frame title}
-    
-    In this slide, some important text will be
-    \alert{highlighted} because it's important. Please, don't abuse it.
-    
-    \begin{block}{Remark}
-        Sample text
-    \end{block}
-    
-    \begin{alertblock}{Important theorem}
-        Sample text in alert box
-    \end{alertblock}
-    
-    \begin{examples}
-        Sample text in green box. The title of the block is ``Examples".
-    \end{examples}
-    
-\end{frame}
-%---------------------------------------------------------
-
-
-%---------------------------------------------------------Slide 7
-\section{Main point layout}
-
-\setLayout{mainpoint}
-\setBGColor{DarkPurple}
-\begin{frame}{}
-    \frametitle{Preliminary Empirical Study}
-\end{frame}
-%-------------------------------------------------------
-
-
-%---------------------------------------------------------Slide 8
-
 \setLayout{horizontal}
-\begin{frame}
-    \frametitle{Sample frame title}
-    This is a text in second frame. For the sake of showing an example.
-    
+\begin{frame}{New (to us) hardware support}
+    \LARGE
     \begin{itemize}
-        \item<1-> Text visible on slide 1
-        \item<2-> Text visible on slide 2
-        \begin{itemize}
-            \item text subitem
-        \end{itemize}
-        \item<3> Text visible on slides 3
-        \item<4-> Text visible on slide 4
+        \item Different assembly encodings
+        \item Some instructions missing on old HW \\
+              or removed from new HW
+        \item Missing subgroup features on old HW
+        \item New (to us) hazards
+        \item Very helpful community
     \end{itemize}
 \end{frame}
-%---------------------------------------------------------
 
-\section{Thanks example}
-%---------------------------------------------------------Slide 9
+\subsection{Small bitsizes}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Small bitsizes}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Small bitsizes}
+    \LARGE
+    We had a lot of ideas.
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Small bitsizes}
+    \LARGE
+    We had a lot of \Huge\underline{bad} \LARGE ideas.
+    \normalsize
+    \ \\
+    \ \\
+    Lots of edge cases, more exceptions than rules.
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Small bitsizes}
+    \LARGE
+    Then we agreed to push the heavy lifting into RA, but...
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Small bitsizes}
+    \LARGE
+    Maintaining the register file \\
+    \ \\
+    \normalsize
+    \begin{itemize}
+        \item Previously: \\
+              256 VGPRs + 106 SGPRs = 362 registers
+        \item Now: \\
+              We manage every byte of every register \\
+              \ \\
+              \footnotesize Yes, \large every \LARGE single \Huge byte.
+    \end{itemize}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Small bitsizes}
+    \LARGE
+    RA shuffles are now crazy \\
+    \ \\
+    \normalsize
+    \begin{itemize}
+        \item Previously: \\
+              We had to move contents of registers
+        \item Now: \\
+              We move individual bytes between registers \\
+              Sometimes even within the same register
+    \end{itemize}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Small bitsizes}
+    \LARGE
+    HW support is inconsistent \\
+    \ \\
+    \normalsize
+    \begin{itemize}
+        \item Some new HW: keeps high bits
+        \item Other new HW: overwrites high bits
+        \item Old HW: manual coding needed
+    \end{itemize}
+\end{frame}
+
+\subsection{Geometry shaders}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Geometry shaders}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Geometry shaders}
+    \LARGE
+    \begin{itemize}
+        \item New intrinsics
+        \item I/O: LDS, VRAM
+        \item Figure out merged shaders
+        \item GS copy shader
+    \end{itemize}
+\end{frame}
+
+%---------------------------------------------------------
 \setLayout{blank}
-\begin{frame}
-    
-    \centering
-    \vspace{2cm}
-    
-    \textbf{\Huge Thanks}
-    
+\begin{frame}{Geometry shaders: 4 new stages}
+    \LARGE
+    \begin{itemize}
+        \item \texttt{vertex\_es} (GFX6-8)
+        \item \texttt{geometry\_gs} (GFX6-8)
+        \item \texttt{vertex\_geometry\_gs} (GFX9+)
+        \item \texttt{gs\_copy\_vs}
+    \end{itemize}
+% The table is too complicated but not that important
+%    \normalsize
+%    \begin{table}[]
+%        \centering
+%        
+%        \renewcommand{\arraystretch}{1.5}
+%        \setlength{\tabcolsep}{10pt}
+%        
+%        {\rowcolors{2}{}{DarkGray!90}
+%            \begin{tabular}{ p{3.5cm}p{1.5cm}p{1.5cm}p{1.5cm}p{1.5cm}  }
+%                \toprule 
+%                & SW VS & SW GS & (copy) & SW FS \\
+%                \midrule
+%                GFX6-8 only VS+PS & HW VS & - & - & HW PS \\
+%                GFX6-8 with GS & \textcolor{red}{HW ES} & \textcolor{red}{HW GS} & \textcolor{red}{HW VS} & HW PS \\
+%                \midrule
+%                GFX9+ only VS+PS & HW VS & - & - & HW PS \\
+%                GFX9+ with GS & \textcolor{red}{ESGS} & \textcolor{red}{ESGS} & \textcolor{red}{HW VS} & HW PS \\
+%                \bottomrule
+%            \end{tabular}
+%        }
+%    \end{table}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{blank}
+\begin{frame}{Without geometry shaders: just VS}
+    \footnotesize
+    \underline{SW Vertex shader (HW VS):}
+    \normalsize \texttt{\\
+        VS go brrrr \\
+        export to where PS can read from
+    }
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{blank}
+\begin{frame}{Geometry shaders: separate stages}
+    \footnotesize
+    \underline{SW Vertex shader (HW ES):}
+    \normalsize \texttt{\\
+        VS go brrrr \\
+        store outputs to VRAM
+    }
+    \footnotesize
     \ \\
-    
-    \textbf{Doubts and Suggestions}
     \ \\
-    
-    \text{\footnotesize altinodantas@gmail.com or deuslirio.junior@gmail.com}
-    
-    \vspace{2cm}
-    \begin{figure}
-        \centering
-        \begin{subfigure}{0.2\textwidth}
-            \centering
-            \includegraphics[height=1cm]{lib/logos/infw.png}
-        \end{subfigure}%
-        \qquad 
-        \begin{subfigure}{0.2\textwidth}
-            \centering
-            \includegraphics[height=1cm]{lib/logos/ufgw.png}
-        \end{subfigure}
-      
-    \end{figure}
+    \underline{Geometry shader (HW GS):}
+    \normalsize \texttt {\\
+        load inputs from VRAM \\
+        GS does its thing \\
+        store outputs to VRAM
+    }
+    \footnotesize
+    \ \\
+    \ \\
+    \underline{GS copy shader (HW VS):}
+    \normalsize \texttt {\\
+        load GS outputs from VRAM \\
+        export to where PS can read from
+    }
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{blank}
+\begin{frame}{Geometry shaders: merged VS+GS stage}
+    \footnotesize \underline{SW VS+GS (HW GS):}
+    \normalsize \texttt{\\
+        if (am I a SW VS invocation?) \\
+        ~~~~ VS go brrrr \\
+        ~~~~ store outputs to LDS \\
+        endif \\
+        if (am I a SW GS invocation?) \\
+        ~~~~ load inputs from LDS \\
+        ~~~~ GS does its thing \\
+        ~~~~ store outputs to VRAM \\
+        endif
+    }
+    \footnotesize
+    \ \\
+    \ \\
+    \underline{GS copy shader (HW VS):}
+    \normalsize \texttt {\\
+        load GS outputs from VRAM \\
+        export to where PS can read from
+    }
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{blank}
+\begin{frame}{Geometry shaders: GS copy shader}
+    \normalsize
+    Hardware limitations:
+    \LARGE
+    \begin{itemize}
+        \item GS store their outputs in VRAM
+        \item PS read their inputs from elsewhere
+        \item So, we need to copy
+    \end{itemize}
+    \ \\
+    \ \\
+    \normalsize
+    (These limitations are eliminated by NGG on Navi)
     
 \end{frame}
 
-%---------------------------------------------------------Slide 10
+\subsection{Tessellation}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Tessellation}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Tessellation}
+    \LARGE
+    Tessellation shaders don't actually tessellate.
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Tessellation}
+    \LARGE
+    \begin{itemize}
+        \item Lots of new intrinsics
+        \item Lots of new stages
+        \item Brain-twister I/O
+    \end{itemize}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Tessellation: merged stages}
+    \normalsize
+    On GFX9+: \\
+    \LARGE
+    VS and TCS are merged \\
+    TES and GS are merged, too.
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{blank}
+\begin{frame}{Tessellation: 6 new stages}
+    \normalsize
+    When you have just tessellation:
+    \LARGE
+    \begin{itemize}
+        \item VS: \texttt{vertex\_ls} (GFX6-8)
+        \item TCS: \texttt{tess\_control\_hs} (GFX6-8)
+        \item VS+TCS: \texttt{vertex\_tess\_control\_hs} (GFX9+)
+        \item TES: \texttt{tess\_eval\_vs}
+    \end{itemize}
+    \normalsize
+    \ \\
+    \ \\
+    When you also have GS:
+    \LARGE
+    \begin{itemize}
+        \item TES: \texttt{tess\_eval\_es} (GFX6-8)
+        \item TES+GS: \texttt{tess\_eval\_geometry\_gs} (GFX9+)
+    \end{itemize}
+%    \footnotesize
+%    \begin{table}[]
+%        \centering
+%        
+%        \renewcommand{\arraystretch}{1.5}
+%        \setlength{\tabcolsep}{10pt}
+%        
+%        {\rowcolors{2}{}{DarkGray!90}
+%            \begin{tabular}{ p{2.5cm}p{1.2cm}p{1.3cm}p{1.3cm}p{1.2cm}p{1.2cm}p{1.2cm} }
+%                \toprule 
+%                & SW VS & SW TCS & SW TES & SW GS & (copy) & SW FS \\
+%                \midrule
+%                GFX6-8 VS+PS & HW VS & - & - & - & - & HW PS \\
+%                GFX6-8 w GS & HW ES & - & - & HW GS & HW VS & HW PS \\
+%                GFX6-8 w tess & \textcolor{red}{HW LS} & \textcolor{red}{HW HS} & \textcolor{red}{HW VS} & - & - & HW PS \\
+%                GFX6-8 w both & \textcolor{red}{HW LS} & \textcolor{red}{HW HS} & \textcolor{red}{HW ES} & HW GS & HW VS & HW PS \\
+%                \midrule
+%                GFX9+ VS+PS & HW VS & - & - & - & - & HW PS \\
+%                GFX9+ w GS & ESGS & - & - & ESGS & HW VS & HW PS \\
+%                GFX9+ w tess & \textcolor{red}{LSHS} & \textcolor{red}{LSHS} & \textcolor{red}{HW VS} & - & - & HW PS \\
+%                GFX9+ w both & \textcolor{red}{LSHS} & \textcolor{red}{LSHS} & \textcolor{red}{ESGS} & \textcolor{red}{ESGS} & HW VS & HW PS \\
+%                \bottomrule
+%            \end{tabular}
+%        }
+%    \end{table}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Tessellation: optimizing merged stages}
+    \LARGE
+    Sometimes the number of VS and TCS invocations are the same. \\
+    \ \\
+    \normalsize
+    This happens when the input and output patch size are 3. \\
+    Turns out they almost always are. \\
+    In this case, VS outputs can be eliminated and transformed to temps.
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Tessellation: I/O}
+    \LARGE
+    Shaders can now read their own output. \\
+    \ \\
+    \normalsize
+    So, sometimes we have to store them in both LDS and VRAM. \\
+    Using different layouts.
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Wave32}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Wave32}
+    \normalsize
+    Optionally, \\
+    \LARGE
+    you can have 32 SIMD lanes instead of 64 \\
+    \ \\
+    \normalsize
+    This breaks a lot of assumptions we had.
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Wave32: special registers}
+    \LARGE
+    We had to change every usage of \texttt{exec} and \texttt{vcc}.
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Wave32: booleans}
+    \normalsize
+    Before: \\
+    \LARGE
+    Uniform (32-bit) vs. divergent (64-bit) \\
+    \ \\
+    \normalsize
+    After: \\
+    \LARGE
+    All booleans are now per-lane \\
+    Uniforms are optimized back
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Wave32: subgroups}
+    \normalsize
+    Subgroup size?
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Wave32: subgroups}
+    \normalsize
+    Subgroup size? \\
+    \LARGE
+    We always report 64 \\
+    but pretend that 32 of those are disabled \\
+    \ \\
+    \normalsize
+    Conforms to the spec, but still troublesome for naive, non-conformant apps \\
+    eg. some expect to use the \texttt{(subgroup\_size - 1)}th lane
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Wave32: when to use?}
+    \normalsize
+    It's off by default (unless you use an env var) \\
+    \LARGE
+    CS: optionally available \\
+    VS, TCS, TES, GS: decide based on divergence? \\
+    PS: performs bad due to interpolation
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{blank}
+\begin{frame}{Btw, we fixed some bugs, too}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \includegraphics[height=3.2cm]{figs/bug1.jpg}
+        \includegraphics[height=3.2cm]{figs/bug2.jpg}
+
+        \column{0.5\textwidth}
+        \includegraphics[height=3.2cm]{figs/bug3.jpg}
+        \includegraphics[height=3.2cm]{figs/bug4.jpg}
+    \end{columns}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{blank}
+\begin{frame}{Btw, we fixed some bugs, too}
+    \LARGE
+    And we added a unit testing framework to make sure they don't happen again.
+\end{frame}
+
+\section{Future plans}
+
+%---------------------------------------------------------
+\setLayout{mainpoint}
+\begin{frame}{}
+    \frametitle{Our plans for the future}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{RDNA 2 Support}
+    \LARGE
+    In progress
+    \begin{itemize}
+        \item We can look at RadeonSI
+        \item We can browse LLVM code
+    \end{itemize}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{RadeonSI (OpenGL) support}
+    \LARGE
+    Long road, but already started
+    \begin{itemize}
+        \item Unify shader arguments - Connor
+        \item Unify I/O handling - Marek
+        \item but ACO still depends on RADV internals
+    \end{itemize}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Ray Tracing}
+    \LARGE
+    \begin{itemize}
+        \item There is a draft KHR extension
+        \item And some LLVM code
+        \item ...but no public RDNA 2 HW docs yet
+    \end{itemize}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{Mesh shaders}
+    \LARGE
+    \begin{itemize}
+        \item Possibly doable even on Navi 10 NGG
+        \item ...but no KHR extension yet
+    \end{itemize}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{More optimizations}
+    \LARGE
+    \begin{itemize}
+        \item Rapid-packed math
+    \end{itemize}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{horizontal}
+\begin{frame}{More optimizations}
+    \LARGE
+    \begin{itemize}
+        \item Clauses on Navi
+        \item Post-RA scheduler
+        \item NGG GS
+        \item Others are also on the way
+        \item And more
+        \item And then some
+    \end{itemize}
+\end{frame}
+
+%---------------------------------------------------------
+\setLayout{blank}
+{
+    \usebackgroundtemplate{\includegraphics[width=\paperwidth]{figs/squirrel.jpg}}%
+    \begin{frame}
+
+        \vspace{2cm}
+        
+        \textbf{\Huge Thanks}
+        
+        \ \\
+        
+        \textbf{\LARGE Questions, suggestions, discussion?}
+        
+        \ \\
+        
+        \textbf{\normalsize A year of ACO}
+        \ \\
+        
+        \text{\normalsize Timur Kristóf}
+        
+        \ \\
+        
+        \text{\footnotesize Venemo @ \#dri-devel, \#radeon, ...}
+        \ \\
+        \text{\footnotesize github.com/Venemo/xdc2020-aco}
+        
+        \vspace{1.4cm}
+        \includegraphics[height=1cm]{lib/logos/valve_logo.pdf}
+        
+    \end{frame}
+}
+
+%---------------------------------------------------------
 \setLayout{titlepage}
-\setBGColor{DarkGray}
 \titlepage
-%-------------------------------------
 
 \end{document}

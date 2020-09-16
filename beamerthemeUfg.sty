@@ -34,8 +34,8 @@
     \pgfdeclareimage[height=10mm]{logo2_small}{#2}
     \pgfdeclareimage[width=13mm]{logo2_medium}{#2}
     
-    % set UFG logo
-    \pgfdeclareimage[height=15mm]{logo3}{lib/logos/ufg_black.pdf}
+    % set XDC logo
+    \pgfdeclareimage[height=15mm]{logo3}{lib/logos/xdc2020_logo.pdf}
 }
 
 \newcommand{\setDefaultConfig}{
@@ -191,7 +191,7 @@
                 \begin{beamercolorbox}[wd=1.1\paperwidth,ht=\paperheight]{bgcolor}\end{beamercolorbox}
              }
             \put(0,0){\pgfuseimage{horizontal}}
-            \put(10,5){\pgfuseimage{logo2_small}}
+            \put(10,5){\pgfuseimage{logo2_medium}}
         \end{picture}
     }
     \setDefaultConfig
@@ -243,6 +243,7 @@
                 \fill[white] (0,0) rectangle (0.2,3);
             \end{tikzpicture}
         }
+        \put(20,20){\pgfuseimage{logo2_medium}}
     \end{picture}
   
   }
